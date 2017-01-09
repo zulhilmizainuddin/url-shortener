@@ -1,0 +1,9 @@
+# directories
+.idea
+node_modules
+
+# files
+*.iml
+
+# databases
+databases/*.db
