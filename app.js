@@ -5,8 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-const validationMiddleware = require('./middlewares/validation');
-const shortenerRoute = require('./routes/shorten');
+const shortenerValidation = require('./middlewares/shortener-validation');
+const expanderValidation = require('./middlewares/expander-validation');
+const shortenRoute = require('./routes/shorten');
+const expandRoute = require('./routes/expand');
 
 var app = express();
 
@@ -22,10 +24,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/shorten', validationMiddleware);
-app.use('/expand', validationMiddleware);
+app.use('/shorten', shortenerValidation);
+app.use('/shorten', shortenRoute);
 
-app.use('/shorten', shortenerRoute);
+app.use('/expand', expanderValidation);
+app.use('/expand', expandRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
