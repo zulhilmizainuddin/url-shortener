@@ -44,7 +44,7 @@ class DatabaseQuery {
             this.db.serialize(() => {
                 this.db.get(`SELECT original_url FROM url WHERE key='${key}'`, (err, row) => {
                     if (!err) {
-                        resolve(row.id);
+                        resolve(row.original_url);
                     } else {
                         reject(err);
                     }
