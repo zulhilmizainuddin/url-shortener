@@ -9,11 +9,11 @@ const DatabaseQuery = require('../models/database-query');
 router.post('/', (req, res, next) => {
 
     const url = req.body.url;
-    const databaseQuery = new DatabaseQuery();
 
     const regex = /http:\/\/localhost:3000\/([a-zA-Z0-9]{1,10})/;
     const key = new RegExp(regex, '').exec(url);
 
+    const databaseQuery = new DatabaseQuery();
     databaseQuery
         .queryOriginalUrl(key[1])
         .then((originalUrl) => {

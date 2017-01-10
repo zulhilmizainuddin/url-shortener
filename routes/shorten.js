@@ -13,8 +13,8 @@ const config = require('../config');
 router.post('/', (req, res, next) => {
     
     const url = req.body.url;
-    const databaseQuery = new DatabaseQuery();
 
+    const databaseQuery = new DatabaseQuery();
     databaseQuery.insertOriginalUrl(url);
     databaseQuery
         .queryId(url)
