@@ -8,7 +8,7 @@ const HttpStatus = require('http-status-codes');
 router.post('/', (req, res, next) => {
 
     const url = req.body.url;
-    const regex = /http:\/\/localhost:3000\/[a-zA-Z0-9]{1,10}/;
+    const regex = /(?:https?:\/\/)?localhost:3000\/[a-zA-Z0-9]{1,10}/;
 
     if (!url.match(regex)) {
         res.status(HttpStatus.BAD_REQUEST).send({
