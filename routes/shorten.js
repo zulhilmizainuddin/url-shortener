@@ -8,9 +8,9 @@ const IdToKeyConverter = require('../utils/id-to-key-converter');
 const HttpStatus = require('http-status-codes');
 const DatabaseQuery = require('../models/database-query');
 
-router.get('/:id', (req, res, next) => {
-
-    const url = req.params.id;
+router.post('/', (req, res, next) => {
+    
+    const url = req.body.url;
     const databaseQuery = new DatabaseQuery();
 
     databaseQuery.insertOriginalUrl(url);
