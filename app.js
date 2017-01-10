@@ -5,8 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+const redirectValidation = require('./middlewares/redirect-validation');
 const shortenerValidation = require('./middlewares/shortener-validation');
 const expanderValidation = require('./middlewares/expander-validation');
+
+const redirectRoute = require('./routes/redirect');
 const shortenRoute = require('./routes/shorten');
 const expandRoute = require('./routes/expand');
 
@@ -23,6 +26,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', redirectValidation);
+app.use('/', redirectRoute);
 
 app.use('/shorten', shortenerValidation);
 app.use('/shorten', shortenRoute);
