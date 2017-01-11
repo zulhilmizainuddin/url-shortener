@@ -3,16 +3,17 @@
 const express = require('express');
 const router = express.Router();
 
-const IdToKeyConverter = require('../utils/id-to-key-converter');
-
 const HttpStatus = require('http-status-codes');
+
 const DatabaseQuery = require('../models/database-query');
+const IdToKeyConverter = require('../utils/id-to-key-converter');
+const UrlParser = require('../utils/url-parser');
 
 const config = require('../config');
 
 router.post('/', (req, res, next) => {
-    
-    const url = req.body.url;
+
+    const url =  UrlParser.removeProtocolFromUrl(req.body.url);
 
     const databaseQuery = new DatabaseQuery();
     databaseQuery.insertOriginalUrl(url);
@@ -23,8 +24,10 @@ router.post('/', (req, res, next) => {
 
             databaseQuery.updateKey(id, key);
             databaseQuery.close();
+
+            let shortenedUrl = UrlParser.addProtocolToUrl(`${config.base_url}/${key}`);
             
-            res.status(HttpStatus.OK).send({shortened_url: `${config.base_url}/${key}`});
+            res.status(HttpStatus.OK).send({shortened_url: shortenedUrl});
         })
         .catch((err) => {
             databaseQuery.close();

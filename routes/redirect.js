@@ -4,7 +4,9 @@ const express = require('express');
 const router = express.Router();
 
 const HttpStatus = require('http-status-codes');
+
 const DatabaseQuery = require('../models/database-query');
+const UrlParser = require('../utils/url-parser');
 
 router.get('/:key', (req, res, next) => {
 
@@ -16,7 +18,9 @@ router.get('/:key', (req, res, next) => {
         .then((originalUrl) => {
             databaseQuery.close();
 
-            res.redirect(originalUrl);
+            const url = UrlParser.addProtocolToUrl(originalUrl);
+
+            res.redirect(url);
         })
         .catch((err) => {
             databaseQuery.close();

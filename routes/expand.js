@@ -4,22 +4,23 @@ const express = require('express');
 const router = express.Router();
 
 const HttpStatus = require('http-status-codes');
+
 const DatabaseQuery = require('../models/database-query');
+const UrlParser = require('../utils/url-parser');
 
 router.post('/', (req, res, next) => {
 
-    const url = req.body.url;
-
-    const regex = /(?:https?:\/\/)?localhost:3000\/([a-zA-Z0-9]{1,10})/;
-    const key = new RegExp(regex, '').exec(url);
+    const key = UrlParser.extractKeyFromUrl(req.body.url);
 
     const databaseQuery = new DatabaseQuery();
     databaseQuery
-        .queryOriginalUrl(key[1])
+        .queryOriginalUrl(key)
         .then((originalUrl) => {
             databaseQuery.close();
 
-            res.status(HttpStatus.OK).send({expanded_url: `${originalUrl}`});
+            const url = UrlParser.addProtocolToUrl(originalUrl);
+
+            res.status(HttpStatus.OK).send({expanded_url: `${url}`});
         })
         .catch((err) => {
             databaseQuery.close();
