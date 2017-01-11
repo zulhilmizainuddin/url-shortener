@@ -8,18 +8,6 @@ const UrlValidation = require('../utils/url-validation');
 
 router.get('/:key', (req, res, next) => {
 
-    // const key = req.params.key;
-    // const regex = /[a-zA-Z0-9]+/;
-
-    // const match = key.match(regex);
-    // if (match.length !== key.length) {
-    //     res.status(HttpStatus.BAD_REQUEST).send({
-    //         error_message: `${req.headers.host}/${key} is not a supported URL`
-    //     });
-
-    //     return;
-    // }
-
     const key = req.params.key;
     if (!UrlValidation.isValidKey(key)) {
         res.status(HttpStatus.BAD_REQUEST).send({
