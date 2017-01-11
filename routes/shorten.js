@@ -24,7 +24,7 @@ router.post('/', (req, res, next) => {
             databaseQuery.updateKey(id, key);
             databaseQuery.close();
             
-            res.status(HttpStatus.OK).send({shortened_url: `${config.baseUrl}/${key}`});
+            res.status(HttpStatus.OK).send({shortened_url: `${config.base_url}/${key}`});
         })
         .catch((err) => {
             databaseQuery.close();

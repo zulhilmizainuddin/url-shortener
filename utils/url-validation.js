@@ -2,13 +2,15 @@
 
 const validator = require('validator');
 
+const config = require('../config');
+
 class UrlValidation {
     static isUrl(url) {
         return validator.isURL(url + '');
     }
 
     static isSupportedUrl(url) {
-        const regex = /(?:https?:\/\/)?localhost:3000\/[a-zA-Z0-9]{1,10}/;
+        const regex = new RegExp(`(?:https?:\/\/)?${config.base_url}\/[a-zA-Z0-9]{1,10}`);
         const match = url.match(regex);
 
         const isSupported = match !== null ? true : false;

@@ -1,7 +1,7 @@
 'use strict';
 
 const config = {
-    baseUrl: 'http://localhost:3000'
+    base_url: 'localhost:3000'
 };
 
 module.exports = config;
