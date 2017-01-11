@@ -11,15 +11,15 @@ class DatabaseQuery {
             this.db.run(
                 `CREATE TABLE if not exists url(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                original_url TEXT,
-                key INTEGER)`
+                original_url TEXT NOT NULL,
+                key VARCHAR(10) DEFAULT '')`
                 );
         });
     }
 
     insertOriginalUrl(url) {
         this.db.serialize(() => {
-            this.db.run('INSERT INTO url VALUES (?, ?, ?)', [null, url, -1]);
+            this.db.run('INSERT INTO url VALUES (?, ?, ?)', [null, url, '']);
         });
     }
 
