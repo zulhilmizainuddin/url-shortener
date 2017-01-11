@@ -2,6 +2,8 @@
 
 const sqlite3 = require('sqlite3').verbose();
 
+const logger = require('../utils/logger');
+
 class DatabaseQuery {
     constructor() {
         const shortenerDb = `${__dirname}/../databases/shortener.db`;
@@ -12,14 +14,23 @@ class DatabaseQuery {
                 `CREATE TABLE if not exists url(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 original_url TEXT NOT NULL,
-                key VARCHAR(10) DEFAULT '')`
-                );
+                key VARCHAR(10) DEFAULT '',
+                UNIQUE (original_url))`,
+                (err) => {
+                    if (err) {
+                        logger.info(err);
+                    }
+                });
         });
     }
 
     insertOriginalUrl(url) {
         this.db.serialize(() => {
-            this.db.run('INSERT INTO url VALUES (?, ?, ?)', [null, url, '']);
+            this.db.run('INSERT INTO url VALUES (?, ?, ?)', [null, url, ''], (err) => {
+                if (err) {
+                    logger.info(err);
+                }
+            });
         });
     }
 
@@ -31,6 +42,8 @@ class DatabaseQuery {
                     if (!err) {
                         resolve(row.id);
                     } else {
+                        logger.info(err);
+
                         reject(err);
                     }
                 });
@@ -46,6 +59,8 @@ class DatabaseQuery {
                     if (!err) {
                         resolve(row.original_url);
                     } else {
+                        logger.info(err);
+
                         reject(err);
                     }
                 });
@@ -55,12 +70,20 @@ class DatabaseQuery {
 
     updateKey(id, key) {
         this.db.serialize(() => {
-            this.db.run('UPDATE url SET key=? WHERE id=?', [key, id]);
+            this.db.run('UPDATE url SET key=? WHERE id=?', [key, id], (err) => {
+                if (err) {
+                    logger.info(err);
+                }
+            });
         });
     }
 
     close() {
-        this.db.close();
+        this.db.close((err) => {
+            if (err) {
+                logger.info(err);
+            }
+        });
     }
 }
 
