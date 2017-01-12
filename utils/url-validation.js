@@ -19,10 +19,10 @@ class UrlValidation {
     }
 
     static isValidKey(key) {
-        const regex = /[a-zA-Z0-9]+/;
+        const regex = /[a-zA-Z0-9]{1,10}/;
         const match = key.match(regex);
 
-        const isValid = match.length === key.length ? true : false;
+        const isValid = match[0] === key ? true : false;
 
         return isValid;
     }
