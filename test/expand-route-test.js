@@ -17,5 +17,5 @@ describe('Expand route', () => {
             expect(isUrl).to.be.true;
             done();
         });
-    });
+    }).timeout(5000);
 });

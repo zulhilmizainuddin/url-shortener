@@ -13,5 +13,5 @@ describe('Redirect route', () => {
             expect(res.statusCode).to.equal(HttpStatus.OK);
             done();
         });
-    });
+    }).timeout(5000);
 });

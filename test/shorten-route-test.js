@@ -17,5 +17,5 @@ describe('Shorten route', () => {
             expect(isSupportedUrl).to.be.true;
             done();
         });
-    });
+    }).timeout(5000);
 });
