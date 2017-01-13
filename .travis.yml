@@ -1,7 +1,14 @@
 language: node_js
 node_js: "node"
 
-install: npm install
+sudo: required
+
+before_install:
+ - sudo apt-get -y update
+ - sudo apt-get -y install memcached
+
+install:
+ - npm install
 
 script:
  - npm start &
