@@ -11,6 +11,9 @@ const redirectValidation = require('./middlewares/redirect-validation');
 const shortenerValidation = require('./middlewares/shortener-validation');
 const expanderValidation = require('./middlewares/expander-validation');
 
+const redirectCache = require('./middlewares/redirect-cache');
+const expanderCache = require('./middlewares/expander-cache');
+
 const redirectRoute = require('./routes/redirect');
 const shortenRoute = require('./routes/shorten');
 const expandRoute = require('./routes/expand');
@@ -30,12 +33,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', redirectValidation);
+app.use('/', redirectCache);
 app.use('/', redirectRoute);
 
 app.use('/shorten', shortenerValidation);
 app.use('/shorten', shortenRoute);
 
 app.use('/expand', expanderValidation);
+app.use('/expand', expanderCache);
 app.use('/expand', expandRoute);
 
 // catch 404 and forward to error handler

@@ -6,6 +6,7 @@ const router = express.Router();
 const HttpStatus = require('http-status-codes');
 
 const DatabaseQuery = require('../models/database-query');
+const UrlCache = require('../models/url-cache');
 const UrlParser = require('../utils/url-parser');
 
 router.post('/', (req, res, next) => {
@@ -18,9 +19,12 @@ router.post('/', (req, res, next) => {
         .then((originalUrl) => {
             databaseQuery.close();
 
+            const urlCache = new UrlCache();
+            urlCache.add(key, originalUrl);
+
             const url = UrlParser.addProtocolToUrl(originalUrl);
 
-            res.status(HttpStatus.OK).send({expanded_url: `${url}`});
+            res.status(HttpStatus.OK).send({expanded_url: url});
         })
         .catch((err) => {
             databaseQuery.close();
