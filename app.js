@@ -14,6 +14,7 @@ const expanderValidation = require('./middlewares/expander-validation');
 const redirectCache = require('./middlewares/redirect-cache');
 const expanderCache = require('./middlewares/expander-cache');
 
+const indexRoute = require('./routes/index');
 const redirectRoute = require('./routes/redirect');
 const shortenRoute = require('./routes/shorten');
 const expandRoute = require('./routes/expand');
@@ -31,6 +32,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRoute);
 
 app.use('/', redirectValidation);
 app.use('/', redirectCache);
