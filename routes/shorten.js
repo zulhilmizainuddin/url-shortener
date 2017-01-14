@@ -32,7 +32,7 @@ router.post('/', (req, res, next) => {
         .catch((err) => {
             databaseQuery.close();
             res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-                error_message: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)
+                error_message: `Failed to shorten ${req.body.url}`
             });
         });
 });

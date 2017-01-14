@@ -39,7 +39,7 @@ class DatabaseQuery {
         return new Promise((resolve, reject) => {
             this.db.serialize(() => {
                 this.db.get(`SELECT id FROM url WHERE original_url='${url}'`, (err, row) => {
-                    if (!err) {
+                    if (!err && row) {
                         resolve(row.id);
                     } else {
                         logger.info(err);
@@ -56,7 +56,7 @@ class DatabaseQuery {
         return new Promise((resolve, reject) => {
             this.db.serialize(() => {
                 this.db.get(`SELECT original_url FROM url WHERE key='${key}'`, (err, row) => {
-                    if (!err) {
+                    if (!err && row) {
                         resolve(row.original_url);
                     } else {
                         logger.info(err);

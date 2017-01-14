@@ -28,8 +28,11 @@ router.get('/:key', (req, res, next) => {
         })
         .catch((err) => {
             databaseQuery.close();
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-                error_message: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)
+
+            const url = UrlParser.addProtocolToUrl(`${req.headers.host}/${key}`);
+
+            res.status(HttpStatus.NOT_FOUND).send({
+                error_message: `Failed to expand ${url}`
             });
         });
 });
