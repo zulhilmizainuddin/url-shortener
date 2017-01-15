@@ -28,6 +28,16 @@ Shortens a URL.
 Parameters:
 
     url - A valid URL
+    
+Example:
+
+    curl -d "url=http://github.com" -X POST http://localhost:7000/shorten
+    
+Result:
+
+```javascript
+{"shortened_url":"http://localhost:7000/1"}
+```
 
 ### POST /expand
 Expands a shortened URL.
@@ -36,9 +46,27 @@ Parameters:
 
     url - A valid shortened URL
     
+Example:
+
+    curl -d "url=http://localhost:7000/1" -X POST http://localhost:7000/expand
+    
+Result:
+
+```javascript
+{"expanded_url": "http://github.com"}
+```
+    
 ### GET /{key}
 Redirects a shortened URL to the original URL.
 
 Parameters:
 
     key - Key from the shortened URL
+
+Example: 
+
+    curl http://localhost:7000/1
+    
+Result:
+
+    Found. Redirecting to http://github.com
