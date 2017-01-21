@@ -15,7 +15,8 @@ class DatabaseQuery {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 original_url TEXT NOT NULL,
                 key VARCHAR(10) DEFAULT '',
-                UNIQUE (original_url))`,
+                UNIQUE (original_url),
+                UNIQUE (key))`,
                 (err) => {
                     if (err) {
                         logger.info(err);
