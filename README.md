@@ -6,6 +6,14 @@ URL shortener RESTful service using Node.js and Express.
 
 ## Getting Started
 
+Install memcached:
+
+    sudo apt-get install memcached
+    
+Start memcached if not already started:
+
+    sudo systemctl start memcached
+
 Install latest Node.js LTS.
 
 Get project dependencies:
@@ -15,6 +23,10 @@ Get project dependencies:
 Start server:
 
     npm start
+    
+or
+
+    pm2 start bin/www --name="url-shortener"
     
 Run unit tests:
 
