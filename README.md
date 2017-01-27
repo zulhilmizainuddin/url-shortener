@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/zulhilmizainuddin/url-shortener.svg?branch=master)](https://travis-ci.org/zulhilmizainuddin/url-shortener)
 [![Code Climate](https://codeclimate.com/github/zulhilmizainuddin/url-shortener/badges/gpa.svg)](https://codeclimate.com/github/zulhilmizainuddin/url-shortener)
 
-URL shortener RESTful service using Node.js and Express.
+URL shortener RESTful service using Node.js, Express, Memcached and SQLite. 
 
 ## Getting Started
 
@@ -82,3 +82,20 @@ Example:
 Result:
 
     Found. Redirecting to http://github.com
+    
+### Delete /delete/{key}
+Deletes a shortened URL.
+
+Parameters:
+
+    key - Key from the shortened URL
+
+Example: 
+
+    curl -X DELETE http://localhost:7000/delete/1
+    
+Result:
+
+```javascript
+{"deleted_url": "http://localhost:7000/1"}
+```
