@@ -6,6 +6,7 @@ const router = express.Router();
 const HttpStatus = require('http-status-codes');
 
 const DatabaseQuery = require('../models/database-query');
+const UrlParser = require('../utils/url-parser');
 
 const config = require('../config');
 
@@ -19,9 +20,9 @@ router.delete('/:key', (req, res, next) => {
         .then(() => {
             databaseQuery.close();
 
-            res.status(HttpStatus.OK).send({
-                deleted_url: `${config.base_url}/${key}`
-            });
+            const deletedUrl = UrlParser.addProtocolToUrl(`${config.base_url}/${key}`);
+
+            res.status(HttpStatus.OK).send({deleted_url: deletedUrl});
         })
         .catch((err) => {
             databaseQuery.close();
