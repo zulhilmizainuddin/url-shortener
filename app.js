@@ -10,14 +10,17 @@ const bodyParser = require('body-parser');
 const redirectValidation = require('./middlewares/redirect-validation');
 const shortenerValidation = require('./middlewares/shortener-validation');
 const expanderValidation = require('./middlewares/expander-validation');
+const deleteValidation = require('./middlewares/delete-validation');
 
 const redirectCache = require('./middlewares/redirect-cache');
 const expanderCache = require('./middlewares/expander-cache');
+const deleteCache = require('./middlewares/delete-cache');
 
 const indexRoute = require('./routes/index');
 const redirectRoute = require('./routes/redirect');
 const shortenRoute = require('./routes/shorten');
 const expandRoute = require('./routes/expand');
+const deleteRoute = require('./routes/delete');
 
 const app = express();
 
@@ -45,6 +48,10 @@ app.use('/shorten', shortenRoute);
 app.use('/expand', expanderValidation);
 app.use('/expand', expanderCache);
 app.use('/expand', expandRoute);
+
+app.use('/delete', deleteValidation);
+app.use('/delete', deleteCache);
+app.use('/delete', deleteRoute);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

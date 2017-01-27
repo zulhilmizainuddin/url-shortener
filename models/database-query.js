@@ -79,6 +79,22 @@ class DatabaseQuery {
         });
     }
 
+    deleteShortenedUrl(key) {
+        return new Promise((resolve, reject) => {
+            this.db.serialize(() => {
+                this.db.run(`DELETE FROM url WHERE key='${key}'`,  (err) => {
+                    if (!err) {
+                        resolve();
+                    } else {
+                        logger.info(err);
+
+                        reject(err);
+                    }
+                });
+            });
+        });
+    }
+
     close() {
         this.db.close((err) => {
             if (err) {

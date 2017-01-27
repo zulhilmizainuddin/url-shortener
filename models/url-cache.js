@@ -28,6 +28,14 @@ class UrlCache {
             callback(result);
         });
     }
+
+    delete(key) {
+        this.memcached.del(key, (err) => {
+            if (err) {
+                logger.info(err);
+            }
+        });
+    }
 }
 
 module.exports = UrlCache;
