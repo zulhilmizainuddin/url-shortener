@@ -7,6 +7,7 @@ dist: trusty
 before_install:
  - sudo apt-get -y update
  - sudo apt-get -y install memcached
+ - sudo echo "127.0.0.1    url-cache" >> /etc/hosts
 
 install:
  - npm install
