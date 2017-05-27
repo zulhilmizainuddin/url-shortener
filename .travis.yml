@@ -4,14 +4,22 @@ node_js: "node"
 sudo: required
 dist: trusty
 
+services:
+  - docker
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.13.0
+
 before_install:
- - sudo apt-get -y update
- - sudo apt-get -y install memcached
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
 install:
- - npm install
+  - docker-compose up -d
 
 script:
- - npm start &
- - sleep 10
- - npm test
+  - docker exec -t url-shortener sh -c npm test
